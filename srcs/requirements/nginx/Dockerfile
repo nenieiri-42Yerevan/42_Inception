@@ -17,11 +17,18 @@ RUN		apt update && \
 		apt install openssl -y && \
 		rm -rf /var/lib/apt/lists/*
 
-RUN		openssl req \
+WORKDIR	/etc/nginx
+
+RUN		mkdir ./ssl && \
+		openssl req \
 		-new -newkey rsa:4096 -nodes \
-		-keyout /etc/ssl/private/nginx-selfsigned.key \
+		-keyout ./ssl/selfsigned.key \
 		-x509 -days 365 \
-		-out /etc/ssl/private/nginx-selfsigned.crt \
+		-out ./ssl/selfsigned.crt \
 		-subj "/C=AM/ST=Yerevan/L=Yerevan/O=42Yerevan/OU=IT/CN=localhost"
+
+COPY	./conf/nginx.conf ./sites-available/nginx.conf
+RUN		ln -s /etc/nginx/sites-available/nginx.conf ./sites-enabled/ && \
+		rm -f ./sites-enabled/default
 
 CMD		["/usr/sbin/nginx", "-g", "daemon off;"]

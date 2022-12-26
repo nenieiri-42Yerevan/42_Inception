@@ -6,7 +6,7 @@
 #    By: vismaily <nenie_iri@mail.ru>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/22 16:46:05 by vismaily          #+#    #+#              #
-#    Updated: 2022/12/23 18:29:09 by vismaily         ###   ########.fr        #
+#    Updated: 2022/12/26 19:58:38 by vismaily         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,5 +30,8 @@ RUN		mkdir ./ssl && \
 COPY	./conf/nginx.conf ./sites-available/nginx.conf
 RUN		ln -s /etc/nginx/sites-available/nginx.conf ./sites-enabled/ && \
 		rm -f ./sites-enabled/default
+		
+COPY	./tools/script.sh ./
+RUN		chmod 766 ./script.sh
 
 CMD		["/usr/sbin/nginx", "-g", "daemon off;"]

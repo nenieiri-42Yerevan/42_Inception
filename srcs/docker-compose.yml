@@ -1,0 +1,38 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    docker-compose.yml                                 :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: vismaily <nenie_iri@mail.ru>               +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/12/26 12:58:47 by vismaily          #+#    #+#              #
+#    Updated: 2022/12/26 13:47:47 by vismaily         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+version: "3.0"
+
+services:
+    wordpress:
+        build: ./requirements/wordpress/
+        image: wordpress
+        container_name: c_wordpress
+        volumes:
+            - "wordpress_data:/var/www/mysite/"
+        restart: always
+    nginx:
+        build: ./requirements/nginx/
+        image: nginx
+        container_name: c_nginx
+        volumes:
+            - "wordpress_data:/var/www/mysite/"
+        restart: always
+        ports:
+            - "80:80"
+            - "443:443"
+        depends_on:
+            - "wordpress"
+
+volumes:
+    wordpress_data:
+    db_data:

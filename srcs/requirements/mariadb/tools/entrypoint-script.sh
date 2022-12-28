@@ -2,13 +2,20 @@
 
 service mysql start;
 
-echo "create database wordpress;" > /tmp/install.sql;
+cd /tmp;
 
-echo -n "grant all privileges on wordpress.* " >> /tmp/install.sql;
-echo "to wpuser@localhost identified by 'your-password';" >> /tmp/install.sql;
+echo "create database $MYSQL_DATABASE;" > ./install.sql;
 
-echo "flush privileges;" >> /tmp/install.sql;
+echo -n "grant all privileges on $MYSQL_DATABASE.* " >> ./install.sql;
+echo "to $MYSQL_USER@localhost identified by '$MYSQL_PASSWORD';" >> ./install.sql;
 
-mariadb < /tmp/install.sql;
+echo -n "ALTER USER 'root'@'localhost' " >> ./install.sql;
+echo "IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';" >> ./install.sql;
+
+echo "flush privileges;" >> ./install.sql;
+
+mariadb < ./install.sql;
+
+rm -f ./install.sql;
 
 exec "$@";

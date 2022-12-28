@@ -20,4 +20,5 @@ COPY		./tools/entrypoint-script.sh ./tmp/
 
 ENTRYPOINT	["/tmp/entrypoint-script.sh"]
 
+#CMD			["mysqld"]
 CMD			["bash"]

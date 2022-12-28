@@ -10,10 +10,14 @@
 #                                                                              #
 # **************************************************************************** #
 
-FROM	debian:buster
+FROM		debian:buster
 
-RUN		apt update && \
-		apt install -y mariadb-server && \
-		rm -rf /var/lib/apt/lists/*
+RUN			apt update && \
+			apt install -y mariadb-server && \
+			rm -rf /var/lib/apt/lists/*
 
-RUN		service mysql start
+COPY		./tools/entrypoint-script.sh ./tmp/
+
+ENTRYPOINT	["/tmp/entrypoint-script.sh"]
+
+CMD			["bash"]

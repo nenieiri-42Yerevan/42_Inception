@@ -6,7 +6,7 @@
 #    By: vismaily <nenie_iri@mail.ru>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/26 12:58:47 by vismaily          #+#    #+#              #
-#    Updated: 2022/12/26 16:17:06 by vismaily         ###   ########.fr        #
+#    Updated: 2022/12/29 16:14:36 by vismaily         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,34 +17,37 @@ services:
         build: ./requirements/mariadb/
         image: mariadb
         container_name: c_mariadb
+        env_file:
+            - .env
         networks:
             - inception
         restart: on_failure
-    wordpress:
-        build: ./requirements/wordpress/
-        image: wordpress
-        container_name: c_wordpress
-        networks:
-            - inception
-        volumes:
-            - wordpress_data:/var/www/mysite/
-        restart: on_failure
-        depends_on:
-            - mariadb
-    nginx:
-        build: ./requirements/nginx/
-        image: nginx
-        container_name: c_nginx
-        networks:
-            - inception
-        volumes:
-            - wordpress_data:/var/www/mysite/
-        restart: on_failure
-        ports:
-            - "80:80"
-            - "443:443"
-        depends_on:
-            - wordpress
+
+        #    wordpress:
+        #        build: ./requirements/wordpress/
+        #        image: wordpress
+        #        container_name: c_wordpress
+        #        networks:
+        #            - inception
+        #        volumes:
+        #            - wordpress_data:/var/www/mysite/
+        #        restart: on_failure
+        #        depends_on:
+        #            - mariadb
+        #    nginx:
+        #        build: ./requirements/nginx/
+        #        image: nginx
+        #        container_name: c_nginx
+        #        networks:
+        #            - inception
+        #        volumes:
+        #            - wordpress_data:/var/www/mysite/
+        #        restart: on_failure
+        #        ports:
+        #            - "80:80"
+        #            - "443:443"
+        #        depends_on:
+        #            - wordpress
 
 networks:
     inception:

@@ -37,24 +37,24 @@ services:
         networks:
             - inception
         volumes:
-            - wordpress_data:/var/www/mysite/
+            - wordpress_data:/var/www/wordpress/
         restart: on-failure
         depends_on:
             - mariadb
-        #    nginx:
-        #        build: ./requirements/nginx/
-        #        image: nginx
-        #        container_name: c_nginx
-        #        networks:
-        #            - inception
-        #        volumes:
-        #            - wordpress_data:/var/www/mysite/
-        #        restart: on_failure
-        #        ports:
-        #            - "80:80"
-        #            - "443:443"
-        #        depends_on:
-        #            - wordpress
+    nginx:
+        build: ./requirements/nginx/
+        image: nginx
+        container_name: c_nginx
+        networks:
+            - inception
+        volumes:
+            - wordpress_data:/var/www/wordpress/
+        restart: on-failure
+        ports:
+            - "80:80"
+            - "443:443"
+        depends_on:
+            - wordpress
 
 networks:
     inception:

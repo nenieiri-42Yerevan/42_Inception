@@ -6,7 +6,7 @@
 #    By: vismaily <nenie_iri@mail.ru>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/26 12:58:47 by vismaily          #+#    #+#              #
-#    Updated: 2022/12/29 16:14:36 by vismaily         ###   ########.fr        #
+#    Updated: 2022/12/30 15:50:07 by vismaily         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ services:
             - .env
         networks:
             - inception
-        restart: on_failure
+        restart: on-failure
 
         #    wordpress:
         #        build: ./requirements/wordpress/

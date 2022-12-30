@@ -6,14 +6,13 @@
 #    By: vismaily <nenie_iri@mail.ru>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/26 15:24:41 by vismaily          #+#    #+#              #
-#    Updated: 2022/12/29 18:01:00 by vismaily         ###   ########.fr        #
+#    Updated: 2022/12/30 15:56:33 by vismaily         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM		debian:buster
 
 RUN			apt update && \
-			apt install -y vim && \
 			apt install -y mariadb-server && \
 			rm -rf /var/lib/apt/lists/*;
 

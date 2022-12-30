@@ -5,17 +5,17 @@ cd /tmp;
 mysql_install_db;
 
 echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;" > ./install.sql;
+
 echo -n "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* " >> ./install.sql;
 echo "TO $MYSQL_USER@localhost IDENTIFIED BY '$MYSQL_PASSWORD';" >> ./install.sql;
-echo "FLUSH PRIVILEGES;" >> ./install.sql;
 
-echo -n "ALTER USER 'root'@'localhost' " >> ./install.sql;
-echo "IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';" >> ./install.sql;
-echo "FLUSH PRIVILEGES;" >> ./install.sql;
+/usr/bin/mysqld_safe &
 
-service mysql start;
-mariadb -u root --password=$MYSQL_ROOT_PASSWORD < install.sql;
+sleep 3;
 
-exec mysqld --init-file=/tmp/install.sql
+mariadb < install.sql;
+mysqladmin -u root password $MYSQL_ROOT_PASSWORD;
 
-#exec "$@";
+service mysql stop;
+
+exec "$@";

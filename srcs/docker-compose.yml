@@ -6,7 +6,7 @@
 #    By: vismaily <nenie_iri@mail.ru>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/26 12:58:47 by vismaily          #+#    #+#              #
-#    Updated: 2022/12/30 15:50:07 by vismaily         ###   ########.fr        #
+#    Updated: 2022/12/30 16:58:49 by vismaily         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,19 +21,26 @@ services:
             - .env
         networks:
             - inception
+        volumes:
+            - db_data:/var/lib/mysql
         restart: on-failure
 
-        #    wordpress:
-        #        build: ./requirements/wordpress/
-        #        image: wordpress
-        #        container_name: c_wordpress
-        #        networks:
-        #            - inception
-        #        volumes:
-        #            - wordpress_data:/var/www/mysite/
-        #        restart: on_failure
-        #        depends_on:
-        #            - mariadb
+    wordpress:
+        build:
+            context: ./requirements/wordpress/
+            args:
+                - MYSQL_HOST=mariadb
+        image: wordpress
+        container_name: c_wordpress
+        env_file:
+            - .env
+        networks:
+            - inception
+        volumes:
+            - wordpress_data:/var/www/mysite/
+        restart: on-failure
+        depends_on:
+            - mariadb
         #    nginx:
         #        build: ./requirements/nginx/
         #        image: nginx
@@ -55,3 +62,8 @@ networks:
 volumes:
     wordpress_data:
     db_data:
+        #        driver: local
+        #        driver_opts:
+        #            device: $PWD/AAA
+        #            o: bind
+        #            type: none

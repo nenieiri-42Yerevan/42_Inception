@@ -1,12 +1,12 @@
 <?php
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'wp_sql' );
+define( 'DB_NAME', '_data_sql' );
 
 /** MySQL database username */
-define( 'DB_USER', 'admin' );
+define( 'DB_USER', '_username' );
 
 /** MySQL database password */
-define( 'DB_PASSWORD', 'admin' );
+define( 'DB_PASSWORD', '_password' );
 
 /** MySQL hostname */
 define( 'DB_HOST', 'localhost' );

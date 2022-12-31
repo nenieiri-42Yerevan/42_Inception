@@ -33,6 +33,8 @@ ENV			MYSQL_HOSTNAME=$MYSQL_HOST
 
 RUN			chmod 766 ./entrypoint-script.sh;
 
+EXPOSE		9000
+
 ENTRYPOINT	["/var/www/entrypoint-script.sh"]
 
 CMD			["/usr/sbin/php-fpm7.3", "-F"]

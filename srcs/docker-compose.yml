@@ -15,7 +15,6 @@ version: "3"
 services:
     mariadb:
         build: ./requirements/mariadb/
-        image: mariadb
         container_name: c_mariadb
         env_file:
             - .env
@@ -30,7 +29,6 @@ services:
             context: ./requirements/wordpress/
             args:
                 - MYSQL_HOST=mariadb
-        image: wordpress
         container_name: c_wordpress
         env_file:
             - .env
@@ -42,16 +40,19 @@ services:
         depends_on:
             - mariadb
     nginx:
-        build: ./requirements/nginx/
-        image: nginx
+        build:
+            context: ./requirements/nginx/
+            args:
+                - WORDPRESS_HOST=wordpress
         container_name: c_nginx
+        env_file:
+            - .env
         networks:
             - inception
         volumes:
             - wordpress_data:/var/www/wordpress/
         restart: on-failure
         ports:
-            - "80:80"
             - "443:443"
         depends_on:
             - wordpress
@@ -62,8 +63,3 @@ networks:
 volumes:
     wordpress_data:
     db_data:
-        #        driver: local
-        #        driver_opts:
-        #            device: $PWD/AAA
-        #            o: bind
-        #            type: none

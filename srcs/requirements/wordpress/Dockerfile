@@ -21,18 +21,18 @@ WORKDIR		/var/www/
 
 RUN			wget https://wordpress.org/latest.tar.gz; \
 			tar -xzvf latest.tar.gz; \
-			rm -rf latest.tar.gz;
-
-WORKDIR		/var/www/wordpress
+			rm -rf latest.tar.gz; \
+			mkdir -p /run/php;
 
 COPY		./tools/entrypoint-script.sh ./
-COPY		./conf/wp-config.php ./
-
-RUN			chmod 766 ./entrypoint-script.sh;
+COPY		./conf/wp-config.php ./wordpress/
+COPY		./conf/www.conf /etc/php/7.3/fpm/pool.d/
 
 ARG			MYSQL_HOST=mariadb
 ENV			MYSQL_HOSTNAME=$MYSQL_HOST
 
-ENTRYPOINT	["/var/www/wordpress/entrypoint-script.sh"]
+RUN			chmod 766 ./entrypoint-script.sh;
 
-CMD			["php-fpm7.3", "-F"]
+ENTRYPOINT	["/var/www/entrypoint-script.sh"]
+
+CMD			["/usr/sbin/php-fpm7.3", "-F"]

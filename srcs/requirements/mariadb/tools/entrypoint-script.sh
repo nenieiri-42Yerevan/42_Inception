@@ -6,8 +6,6 @@ if [ ! -d "/run/mysqld" ]; then
 fi
 
 if [ ! -d "/var/lib/mysql/$MYSQL_DATABASE" ]; then
-	cd /tmp;
-
 	mysql_install_db;
 
 	echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;" > ./install.sql;
@@ -22,7 +20,7 @@ if [ ! -d "/var/lib/mysql/$MYSQL_DATABASE" ]; then
 	mariadb < install.sql;
 	mysqladmin -u root password $MYSQL_ROOT_PASSWORD;
 
-	service mysql stop;
+	mysqladmin -u root -p$MYSQL_ROOT_PASSWORD shutdown;
 fi
 
 exec "$@";

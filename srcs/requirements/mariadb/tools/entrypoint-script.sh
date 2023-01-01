@@ -1,21 +1,28 @@
 #!/bin/bash
 
-cd /tmp;
+if [ ! -d "/run/mysqld" ]; then
+	mkdir -p /run/mysqld
+	chown -R mysql:mysql /run/mysqld
+fi
 
-mysql_install_db;
+if [ ! -d "/var/lib/mysql/$MYSQL_DATABASE" ]; then
+	cd /tmp;
 
-echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;" > ./install.sql;
+	mysql_install_db;
 
-echo -n "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* " >> ./install.sql;
-echo "TO $MYSQL_USER@localhost IDENTIFIED BY '$MYSQL_PASSWORD';" >> ./install.sql;
+	echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;" > ./install.sql;
 
-/usr/bin/mysqld_safe &
+	echo -n "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* " >> ./install.sql;
+	echo "TO $MYSQL_USER@localhost IDENTIFIED BY '$MYSQL_PASSWORD';" >> ./install.sql;
 
-sleep 3;
+	/usr/bin/mysqld_safe &
 
-mariadb < install.sql;
-mysqladmin -u root password $MYSQL_ROOT_PASSWORD;
+	sleep 3;
 
-service mysql stop;
+	mariadb < install.sql;
+	mysqladmin -u root password $MYSQL_ROOT_PASSWORD;
+
+	service mysql stop;
+fi
 
 exec "$@";

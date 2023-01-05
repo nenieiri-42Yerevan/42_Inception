@@ -6,7 +6,7 @@
 #    By: vismaily <nenie_iri@mail.ru>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/05 15:05:23 by vismaily          #+#    #+#              #
-#    Updated: 2023/01/05 17:49:55 by vismaily         ###   ########.fr        #
+#    Updated: 2023/01/05 18:15:52 by vismaily         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,30 +16,30 @@ MOUNT_DIR	= $(HOME)/data
 all:		build up
 
 build:
-			sudo docker-compose $(FILE) build
+			docker-compose $(FILE) build
 
 up:
-			sudo mkdir -p $(MOUNT_DIR)/mariadb
-			sudo mkdir -p $(MOUNT_DIR)/wordpress
-			sudo docker-compose $(FILE) up -d
+			mkdir -p $(MOUNT_DIR)/mariadb
+			mkdir -p $(MOUNT_DIR)/wordpress
+			docker-compose $(FILE) up -d
 
 down:
-			sudo docker-compose $(FILE) down
+			docker-compose $(FILE) down
 
 start:
-			sudo docker-compose $(FILE) start
+			docker-compose $(FILE) start
 
 stop:
-			sudo docker-compose $(FILE) stop
+			docker-compose $(FILE) stop
 
 clean:		down
-			sudo docker image prune
-			sudo docker rmi mariadb wordpress nginx
+			docker image prune
+			docker rmi mariadb wordpress nginx
 
 fclean:
-			sudo docker volume rm srcs_db_data srcs_wordpress_data
-			sudo rm -rf $(MOUNT_DIR)/mariadb
-			sudo rm -rf $(MOUNT_DIR)/wordpress
+			docker volume rm srcs_db_data srcs_wordpress_data
+			rm -rf $(MOUNT_DIR)/mariadb
+			rm -rf $(MOUNT_DIR)/wordpress
 
 re:			fclean all
 

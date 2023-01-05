@@ -6,7 +6,7 @@
 #    By: vismaily <nenie_iri@mail.ru>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/26 12:58:47 by vismaily          #+#    #+#              #
-#    Updated: 2022/12/30 16:58:49 by vismaily         ###   ########.fr        #
+#    Updated: 2023/01/05 16:39:19 by vismaily         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,20 +15,21 @@ version: "3"
 services:
     mariadb:
         build: ./requirements/mariadb/
+        image: mariadb
         container_name: c_mariadb
         env_file:
             - .env
         networks:
             - inception
-              #        volumes:
-              #            - db_data:/var/lib/mysql
+        volumes:
+            - db_data:/var/lib/mysql
         restart: on-failure
-
     wordpress:
         build:
             context: ./requirements/wordpress/
             args:
                 - MYSQL_HOST=mariadb
+        image: wordpress
         container_name: c_wordpress
         env_file:
             - .env
@@ -44,6 +45,7 @@ services:
             context: ./requirements/nginx/
             args:
                 - WORDPRESS_HOST=wordpress
+        image: nginx
         container_name: c_nginx
         env_file:
             - .env
@@ -62,4 +64,12 @@ networks:
 
 volumes:
     wordpress_data:
+        driver_opts:
+            device: $HOME/Desktop/wordpress
+            o: bind
+            type: none
     db_data:
+        driver_opts:
+            device: $HOME/Desktop/mariadb
+            o: bind
+            type: none

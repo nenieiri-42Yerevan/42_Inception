@@ -6,12 +6,12 @@
 #    By: vismaily <nenie_iri@mail.ru>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/05 15:05:23 by vismaily          #+#    #+#              #
-#    Updated: 2023/01/05 16:40:30 by vismaily         ###   ########.fr        #
+#    Updated: 2023/01/05 17:39:27 by vismaily         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FILE		= -f ./srcs/docker-compose.yml
-MOUNT_DIR	= /home/$(USER)/data
+MOUNT_DIR	= $(HOME)/data
 
 all:		build up
 

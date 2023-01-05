@@ -6,7 +6,7 @@
 #    By: vismaily <nenie_iri@mail.ru>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/26 12:58:47 by vismaily          #+#    #+#              #
-#    Updated: 2023/01/05 16:39:19 by vismaily         ###   ########.fr        #
+#    Updated: 2023/01/05 17:39:29 by vismaily         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,11 +65,11 @@ networks:
 volumes:
     wordpress_data:
         driver_opts:
-            device: $HOME/Desktop/wordpress
+            device: $HOME/data/mariadb
             o: bind
             type: none
     db_data:
         driver_opts:
-            device: $HOME/Desktop/mariadb
+            device: $HOME/data/mariadb
             o: bind
             type: none

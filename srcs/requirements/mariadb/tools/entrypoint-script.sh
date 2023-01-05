@@ -11,7 +11,7 @@ if [ ! -d "/var/lib/mysql/$MYSQL_DATABASE" ]; then
 	echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;" > ./install.sql;
 
 	echo -n "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* " >> ./install.sql;
-	echo "TO $MYSQL_USER@localhost IDENTIFIED BY '$MYSQL_PASSWORD';" >> ./install.sql;
+	echo "TO $MYSQL_USER@'%' IDENTIFIED BY '$MYSQL_PASSWORD';" >> ./install.sql;
 
 	/usr/bin/mysqld_safe &
 

@@ -6,7 +6,7 @@
 #    By: vismaily <nenie_iri@mail.ru>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/05 15:05:23 by vismaily          #+#    #+#              #
-#    Updated: 2023/01/05 18:15:52 by vismaily         ###   ########.fr        #
+#    Updated: 2023/01/06 14:10:19 by vismaily         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,12 +35,10 @@ stop:
 clean:		down
 			docker image prune
 			docker rmi mariadb wordpress nginx
-
-fclean:
 			docker volume rm srcs_db_data srcs_wordpress_data
 			rm -rf $(MOUNT_DIR)/mariadb
 			rm -rf $(MOUNT_DIR)/wordpress
 
-re:			fclean all
+re:			clean all
 
 .PHONY:		all clean fclean re build up down start stop

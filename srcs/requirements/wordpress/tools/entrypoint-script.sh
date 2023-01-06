@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ! [ -f "/var/www/wordpress/wp-config.php" ]; then
+if ! grep -q $MYSQL_DATABASE "./wordpress/wp-config.php"; then
 	sed -i "s/_data_sql/$MYSQL_DATABASE/g" ./wordpress/wp-config.php;
 	sed -i "s/_username/$MYSQL_USER/g"	   ./wordpress/wp-config.php;
 	sed -i "s/_password/$MYSQL_PASSWORD/g" ./wordpress/wp-config.php;
@@ -11,6 +11,20 @@ if ! [ -f "/var/www/wordpress/wp-config.php" ]; then
 	chmod +x wp-cli.phar
 
 	mv wp-cli.phar /usr/local/bin/wp
+
+	wp core install --allow-root --path=./wordpress/ \
+	   	--url=$DOMAIN_NAME \
+		--title=$WP_TITLE \
+		--admin_user=$WP_ADMIN_NAME \
+		--admin_password=i$WP_ADMIN_PASSWORD \
+		--admin_email=$WP_ADMIN_EMAIL;
+
+	wp user create --allow-root --path=./worpress/ \
+		$WP_USER_NAME \
+		$WP_USER_EMAIL \
+		--user_pass=$WP_USER_PASSWORD;
+
+	wp theme activate twentytwentytwo --allow-root --path=./worpress/;
 fi
 
 exec "$@";

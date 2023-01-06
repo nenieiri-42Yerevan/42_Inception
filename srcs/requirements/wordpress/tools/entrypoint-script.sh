@@ -18,7 +18,7 @@ if ! grep -q $MYSQL_DATABASE "./wordpress/wp-config.php"; then
 	   	--url=$DOMAIN_NAME \
 		--title=$WP_TITLE \
 		--admin_user=$WP_ADMIN_NAME \
-		--admin_password=i$WP_ADMIN_PASSWORD \
+		--admin_password=$WP_ADMIN_PASSWORD \
 		--admin_email=$WP_ADMIN_EMAIL;
 
 	wp user create --allow-root --path=./wordpress/ \

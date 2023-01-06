@@ -1,6 +1,8 @@
 #!/bin/bash
 
 if ! grep -q $MYSQL_DATABASE "./wordpress/wp-config.php"; then
+	sleep 10;
+
 	sed -i "s/_data_sql/$MYSQL_DATABASE/g" ./wordpress/wp-config.php;
 	sed -i "s/_username/$MYSQL_USER/g"	   ./wordpress/wp-config.php;
 	sed -i "s/_password/$MYSQL_PASSWORD/g" ./wordpress/wp-config.php;
@@ -19,12 +21,12 @@ if ! grep -q $MYSQL_DATABASE "./wordpress/wp-config.php"; then
 		--admin_password=i$WP_ADMIN_PASSWORD \
 		--admin_email=$WP_ADMIN_EMAIL;
 
-	wp user create --allow-root --path=./worpress/ \
+	wp user create --allow-root --path=./wordpress/ \
 		$WP_USER_NAME \
 		$WP_USER_EMAIL \
 		--user_pass=$WP_USER_PASSWORD;
 
-	wp theme activate twentytwentytwo --allow-root --path=./worpress/;
+	wp theme activate twentytwentytwo --allow-root --path=./wordpress/;
 fi
 
 exec "$@";

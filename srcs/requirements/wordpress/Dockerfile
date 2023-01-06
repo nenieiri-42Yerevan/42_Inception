@@ -6,14 +6,14 @@
 #    By: vismaily <nenie_iri@mail.ru>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/22 16:46:05 by vismaily          #+#    #+#              #
-#    Updated: 2023/01/05 14:14:33 by vismaily         ###   ########.fr        #
+#    Updated: 2023/01/06 11:55:49 by vismaily         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM		debian:buster
 
 RUN			apt update; \
-			apt install -y wget; \
+			apt install -y wget curl; \
 			apt install -y php php-fpm php-mysqli mariadb-client; \
 			rm -rf /var/lib/apt/lists/*;
 
